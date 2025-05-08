@@ -1,0 +1,847 @@
+{
+  "name": "Full n8n Course",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        120,
+        -640
+      ],
+      "id": "727b43cb-99c7-4fd5-aecc-f1c37eb8aa58",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## HTTP Request Node (The API Call Node)\n\n**What Is It?**\n\n- All data on the internet is passed from place to place with HTTP requests.\n\n- It's what an API call is. \n\n- You send a bit of data to another website's API (server), and it sends something back.\n\n**Why Use It?**\n\n- Most established software platforms have APIs, and if one isn't built into n8n, you use a HTTP node to make an API call to it.\n\n**How To Set It Up?**\n\n1. Go to the website you want to get data from.\n\n2. Find your API key, and the cURL notation on how to call the API.\n\n3. Set up the HTTP node using JSON / Expressions.",
+        "height": 520,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        40,
+        -1300
+      ],
+      "typeVersion": 1,
+      "id": "c531be03-50bb-4333-a61b-69a0c5b07e4b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## The Set / Edit Fields Node\n\n**What Is It?**\n\n- Allows you to select, add and rename the data variables that you'd like to use in your automation.\n\n**Why Use It?**\n\n- It cleans up your automation, and makes it easier to work with. It's also one of the most widely used nodes.\n\n- If you're making API calls to get data over a specific time period it's useful for setting the date in the format that's required by different APIs\n\n**How To Set It Up?**\n\n1. Search for the 'set' node on the right hand side.",
+        "height": 360,
+        "width": 600,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        880,
+        -1140
+      ],
+      "typeVersion": 1,
+      "id": "f9784d54-dff0-47e6-8d66-e221f4c87a40",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a58d06f4-7d65-464c-a521-cd835651917b",
+              "name": "websiteMarkdown",
+              "value": "={{ $('Web Scraper (Firecrawl)').item.json.data.markdowns || 'markdown was unavailable'}}",
+              "type": "string"
+            },
+            {
+              "id": "e0741367-da8b-462d-aa2c-d1bbcd6814e8",
+              "name": "randomList",
+              "value": "={{['apple', 'bananas', 'oranges']}}",
+              "type": "array"
+            },
+            {
+              "id": "2980bc25-c169-4390-8f27-ea893cf35c24",
+              "name": "today",
+              "value": "={{ $now.format('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "67788207-c1d7-43e3-8bed-f02ace3fe6e1",
+              "name": "yesterday",
+              "value": "={{ $now.minus(1, 'days').format('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "795f0672-26bb-4735-955f-6f21b9e17c70",
+              "name": "platform",
+              "value": "google",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        -640
+      ],
+      "id": "8d8b2c8e-9333-4197-8891-cd6c1733d5db",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## The Split Out Node\n\n**What Is It?**\n\n- Separate a single data item containing a list into multiple items. \n\n**Why Use It?**\n\n- Useful when a previous node returns a list, and you want to run the same process for each item in the list. For example, a list of customers, and you want to split them so that you have an item for each customer.\n\n**How To Set It Up?**\n\n1. Search for the 'set' node on the right hand side.",
+        "height": 360,
+        "width": 600,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2480,
+        -1140
+      ],
+      "typeVersion": 1,
+      "id": "fc29bc5a-1925-4e21-a71d-fb3f671d73b1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "randomList",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2740,
+        -660
+      ],
+      "id": "a54dbf95-27e4-4b61-be97-12c891519ca9",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "content": "## Expressions\n\n**What Are they?**\n\n- You can enter JavaScript between {{ }} brackets to format data, or retrieve data in a certain way.\n\n**Why Use It?**\n\n- You'll very often need to use the expression to pick the right bit of data you want for your automation.\n\n",
+        "height": 280,
+        "width": 600,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        880,
+        -400
+      ],
+      "typeVersion": 1,
+      "id": "27aeee2c-a92e-4021-b335-8ea6bb4f26e4",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## The Switch & If Node\n\n**What Is It?**\n\n- Allows you to make the automation do different things depending on the inputs. \n\nE.g. If platform = 'google' then do this. Or if X>8 then do this.\n\nThe switch node allows for more than two output paths, whereas the if node just allows true and false.\n\n**Why Use It?**\n\n- Useful when you need to do two different workflows depending on what your input data is. For example, formatting a CSV file rather than a TXT file.\n\n**How To Set It Up?**\n\n1. See the node below.",
+        "height": 420,
+        "width": 600,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1660,
+        -1200
+      ],
+      "typeVersion": 1,
+      "id": "990c0808-30d0-4e71-8e59-e754f6c9dbe7",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.platform }}",
+                    "rightValue": "=google",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "67acd2a5-5b0b-42b1-bfd3-4e0dcb6a9bf4"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "google"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3981d32f-22cd-4ca7-ba35-7c5b1173d3d4",
+                    "leftValue": "={{ $('Edit Fields').item.json.platform }}",
+                    "rightValue": "facebook",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "facebook"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1880,
+        -640
+      ],
+      "id": "86c3b313-f3f6-44c2-94c0-89a674f2af5a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f3f798d3-9fe4-4044-a96d-e9ba45551319",
+              "leftValue": "={{ $json.today }}",
+              "rightValue": "2025-05-08T00:00:00",
+              "operator": {
+                "type": "dateTime",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1880,
+        -440
+      ],
+      "id": "f22d2f0d-2bdb-4ed7-9888-60a15ec1b82f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "endpoint",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        340,
+        -220
+      ],
+      "id": "308469a3-7d61-47e7-b33b-b2247e812341",
+      "name": "Webhook",
+      "webhookId": "b391a62b-28fb-4ff9-8a89-fbf88cfd7e74"
+    },
+    {
+      "parameters": {
+        "content": "## Webhook Node\n\n**What Is It?**\n\n- Webhooks allow one software to send data to another in real-time.\n\n- They are event-driven. E.g. when someone makes an order from an online store, a webhook is often automatically sent out.\n\n- They can be used to send data over the internet, based on events that happen. This data is sent as a JSON object (the data your familiar with in n8n).\n\n- You setup a webhook trigger, to 'listen' for a specific webhook event. When you 'hear' this event, your workflow will receive the JSON data, and trigger your workflow.\n\nE.g. Someone purchases a product on your Shopify store and then you send an automatic email using the data received in the webhook.\n\n**Why Use It?**\n\n- Webhooks allow your automation to respond in real-time, instead of using a schedule to run your automation at set times.\n\n- It is a foundational technology of the internet used by 99% of software.\n\n\n**How To Use It?**\n\nSelect the POST method if you will be receiving data (99% of the time this is the case.\n\nCopy the URL and set is as the endpoint in whatever application you're setting up the endpoint for.\n",
+        "height": 680,
+        "width": 600,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        40,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "8c22b2d2-3b46-4ab3-85b0-f6025506ac87",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://serendipityy.app.n8n.cloud/webhook/endpoint",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "Myles"
+            },
+            {
+              "name": "job",
+              "value": "automation"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        340,
+        -440
+      ],
+      "id": "b3c8a2e1-7d82-4bf3-af9d-b13aa91d0dd9",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n        \"url\": \"https://heraclothing.com/collections/mens-hoodies/products/mens-graffiti-oversized-hoodie-charcoal-grey?variant=\",\n\t\t\"formats\": [ \"markdown\" ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        340,
+        -640
+      ],
+      "id": "d9274e08-0dd8-4d6f-a99a-fbec797a572b",
+      "name": "Web Scraper (Firecrawl)",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "DWxfTr9NHkbsvpCO",
+          "name": "Firecrawl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## The Extract From Node\n\n**What Is It?**\n\n- You'll often be working a file, such as a document, pdf, image etc... these files are in binary format.\n\n- The extract from node converts these binary files into JSON format.\n\n**Why Use It?**\n\n- Binary files can't be easily worked with in n8n, unlike JSON files.\n\n",
+        "height": 300,
+        "width": 600,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2220,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "74d721f0-78c4-4f33-9d8c-d99ae7f4e6f4",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        380
+      ],
+      "id": "0d60e6fa-5852-4730-8907-c2a0f9f866b8",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "content": "## The Convert To Node\n\n**What Is It?**\n\n- The opposite of the extract from node. It converts your JSON data back to binary.\n\n**Why Use It?**\n\n- When outputting to a particular file type such as PDF or CSV that you need for a different platform.\n\n",
+        "height": 240,
+        "width": 600,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3080,
+        60
+      ],
+      "typeVersion": 1,
+      "id": "40415c68-f2ee-4a16-b005-b437b4cb78ee",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3300,
+        360
+      ],
+      "id": "788e92c7-f99e-406a-91f6-42a50121fbdf",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "content": "## The Convert To Node (Base 64 Strings)\n\nAPI calls / webhooks will send binary data (images, files etc...) as a base64 string. This is because only JSON / HTML can be sent over the internet.\n\nTherefore, you'll often need to convert a base64 string back into the image you want for example.\n\nFor this you'd use the same 'Convert To' node, with the base64 setting like below.\n",
+        "height": 220,
+        "width": 600,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3080,
+        540
+      ],
+      "typeVersion": 1,
+      "id": "b2a6df15-1456-41cf-ba96-860eaef3f680",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3300,
+        820
+      ],
+      "id": "2439a7d8-19f7-4a00-8609-8da60e928be8",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3400,
+        -660
+      ],
+      "id": "50de73a1-55c0-4268-9217-940df22a65eb",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0ae38498-9e88-4f30-b904-6171a2828a65",
+              "name": "sentenceCasedItems",
+              "value": "={{ $json.randomList.toSentenceCase() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3600,
+        -500
+      ],
+      "id": "b75c9aba-b1d7-4fbe-9788-7786f2190545",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "sentenceCasedItems",
+              "renameField": true,
+              "outputFieldName": "fruitList"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        4060,
+        -660
+      ],
+      "id": "9baa36a4-45d0-480a-ba18-62560cc4698e",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "content": "## The Loop Node\n\n**What Is It?**\n\n- Allows you to loop over each item in your workflow and perform the same action to it.\n\n**Why Use It?**\n\n- Useful if your workflow accepts multiple files and for each file you have a specific workflow to perform.",
+        "height": 260,
+        "width": 600,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3220,
+        -1040
+      ],
+      "typeVersion": 1,
+      "id": "e810527a-717a-4abc-8ef1-67767f7e9540",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## The Aggregate Node\n\n**What Is It?**\n\n- Allows you to take separate items, and then group them together again.",
+        "width": 600,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3940,
+        -940
+      ],
+      "typeVersion": 1,
+      "id": "e5a164a7-66a1-4268-af99-418c236b8f11",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "# n8n Crash Course\n\n## Learn 80% of the stuff you need to start creating workflows.",
+        "width": 900
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1760,
+        -1500
+      ],
+      "typeVersion": 1,
+      "id": "e59b03be-a8b1-4e5d-9c1e-685a7076ee4a",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "## Useful Software Tools / LLMs for Business \n\n**Firecrawl** - scrape websites easily (500 free credits)\n\n**Apify** - pre-built website scrapers that return structured data for sites like Trustpilot, Google maps etc...\n\n**Subframe** - turn your Figma designs into websites (great for coders who are bad at UI design)\n\n**Cursor** - AI coding tool\n\n**Post-Bridge** - great app to post to multiple platforms at once, at very little cost.\n\n**Grok 3** - the best LLM for getting advice + instructions IMO. \n\n**Gemini 2.5** - the best LLM for coding.\n\n**Bombocart.net** (my Shopify app) - send text messages to customers who abandoned their checkouts",
+        "height": 380,
+        "width": 900,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4980,
+        -3440
+      ],
+      "typeVersion": 1,
+      "id": "0739fe94-2099-40d6-bb75-0d0c1b8a2b67",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## Shopify Store Owners\n\n- Setup a private app in your Shopify store\n\n- Use Cursor with the Shopify Dev MCP server so that you can easily create API calls for your specific need\n\n- Use the HTTP request node to make API calls to your store",
+        "height": 260,
+        "width": 360,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4520,
+        -3440
+      ],
+      "typeVersion": 1,
+      "id": "833499e0-2f4f-41f0-b6eb-abdd04ebbfbd",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "## For Google Ads\n\n- Request access to a developer token. This will allow you to add Google Ads api calls to your n8n workflows.\n\n- Use the HTTP request node to make API calls to your Google Ads account.",
+        "height": 200,
+        "width": 360,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4520,
+        -3120
+      ],
+      "typeVersion": 1,
+      "id": "3bbf041b-44fb-4e5d-8435-39cb942a34d7",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## Connecting With Google Services\n\nTo connect with Google Drive, docs etc... you'll need to learn how to setup a Google Cloud project and setup the necessary API access.\n\nAsk AI for the step by step process or check out the n8n docs here.\n\nhttps://docs.n8n.io/integrations/builtin/credentials/google/oauth-single-service/",
+        "height": 200,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4640,
+        -980
+      ],
+      "typeVersion": 1,
+      "id": "232854d7-04a4-4fed-b140-9ecf90bb5194",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4840,
+        -640
+      ],
+      "id": "f20e68a2-59e3-4b00-8200-cd1457b69ab2",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "pEIT7dSjvq3NCmhZ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## First - How To Teach Yourself / Solve Your Issues\n\n1. **Ask Grok-3 to help you make your automation.** \n\nJust say \"I want to build an automation in n8n that does XYZ, please give me the step by step process.\"\n\n2. **Use the AI assistant within n8n**\n\nIt has context, and is good at solving specific workflow issues.\n\n3. **Read the documentation**\n\nThere are links to the documentation in all workflows / authentication setups.",
+        "height": 400,
+        "width": 420,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -600,
+        -1220
+      ],
+      "typeVersion": 1,
+      "id": "1df5989d-ffd3-420e-b97a-758c78a33bd6",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "content": "## Join my community for personal help - skool.com/aiwtb\n",
+        "height": 80,
+        "width": 660,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3380,
+        -1820
+      ],
+      "typeVersion": 1,
+      "id": "20bdff42-c9a1-410c-b9c6-388dcc56728f",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "content": "## Join my community for personal help - skool.com/aiwtb\n",
+        "height": 80,
+        "width": 660,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5360,
+        -980
+      ],
+      "typeVersion": 1,
+      "id": "ec926f4d-2ca7-4955-b179-f52e8487a61f",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "operation": "get"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5060,
+        -640
+      ],
+      "id": "56ff9d58-1b19-432d-bd0b-104c53f068ba",
+      "name": "Gmail",
+      "webhookId": "27b0d38b-f318-43f8-93e0-7d925981ad6e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "eDQsTNiQLmSVFYQR",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Web Scraper (Firecrawl)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        []
+      ]
+    },
+    "Web Scraper (Firecrawl)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        []
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "dc5deca7-f1c6-4586-b4b9-a999c3a0a879",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "07f23135c685deafab755e4e7534729a258ad86afd9bd03bb49416c2ff235c0e"
+  },
+  "id": "j7Teuhao2liKb8jN",
+  "tags": []
+}
